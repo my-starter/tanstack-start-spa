@@ -1,4 +1,5 @@
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
@@ -6,10 +7,23 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  preview: {
+    strictPort: true,
+  },
   plugins: [
     tsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
-    tanstackStart(),
+    tailwindcss(),
+    tanstackStart({
+      spa: {
+        prerender: {
+          outputPath: './404.html',
+          crawlLinks: true,
+          retryCount: 3,
+        },
+      },
+
+    }),
   ],
 })
