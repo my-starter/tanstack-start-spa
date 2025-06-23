@@ -14,6 +14,9 @@ import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
 import { NotFound } from '~/components/NotFound'
 import appCss from '~/styles/app.css?url'
 import { seo } from '~/utils/seo'
+import '@mantine/core/styles.css';
+import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
+
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -77,9 +80,10 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html>
+    <html {...mantineHtmlProps}>
       <head>
         <HeadContent />
+        <ColorSchemeScript />
       </head>
       <body>
         <div className="p-2 flex gap-2 text-lg">
@@ -91,7 +95,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             activeOptions={{ exact: true }}
           >
             Home
-          </Link>{' '}
+          </Link>
+          <Link
+            to="/demo"
+            activeProps={{
+              className: 'font-bold',
+            }}
+            activeOptions={{ exact: true }}
+          >
+            Demo
+          </Link>
           <Link
             // @ts-expect-error
             to="/this-route-does-not-exist"
@@ -103,7 +116,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
         <hr />
-        {children}
+        <MantineProvider>{children}</MantineProvider>
         <TanStackRouterDevtools position="bottom-right" />
         <ReactQueryDevtools buttonPosition="bottom-left" />
         <Scripts />
