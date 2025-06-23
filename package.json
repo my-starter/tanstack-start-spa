@@ -43,7 +43,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "recharts": "2",
-    "redaxios": "^0.5.1"
+    "redaxios": "^0.5.1",
+    "vite-plugin-pwa": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.3",

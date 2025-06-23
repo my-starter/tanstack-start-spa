@@ -58,6 +58,13 @@ export const Route = createRootRouteWithContext<{
       { rel: 'manifest', href: '/site.webmanifest', color: '#fffff' },
       { rel: 'icon', href: '/favicon.ico' },
     ],
+    scripts: [
+      {
+        src: '/sw.js',
+        type: 'module',
+        async: true,
+      },
+    ],
   }),
   errorComponent: (props) => {
     return (
