@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { getAllData } from '~/server/functions';
+import { getAllData } from '@/server/functions';
 export const Route = createFileRoute('/')({
   component: Home,
   loader: async () => {
