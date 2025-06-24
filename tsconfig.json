@@ -1,5 +1,10 @@
 {
-  "include": ["**/*.ts", "**/*.tsx", "postcss.config.ts"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "postcss.config.ts",
+    "scripts/generate-sw.ts"
+  ],
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
@@ -17,9 +22,7 @@
     "paths": {
       "~/*": ["./src/*"]
     },
-    "types": [
-      "vite-plugin-pwa/client"
-    ],
+    "types": [],
     "noEmit": true
   }
 }
