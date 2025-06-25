@@ -16,7 +16,10 @@ import appCss from '@/styles/app.css?url'
 import { seo } from '@/utils/seo'
 import '@mantine/core/styles.css';
 import { ColorSchemeScript, MantineProvider, mantineHtmlProps } from '@mantine/core';
+import { init } from '@/init';
+import { useEffect } from 'react';
 
+init();
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
@@ -69,16 +72,14 @@ export const Route = createRootRouteWithContext<{
   },
   notFoundComponent: () => <NotFound />,
   component: RootComponent,
-  scripts: () => [
-    {
-      src: "/registerSW.js",
-      type: "module",
-      async: true,
-    },
-  ],
 })
 
 function RootComponent() {
+
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <RootDocument>
       <Outlet />

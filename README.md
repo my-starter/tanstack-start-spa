@@ -1,3 +1,57 @@
+## rxdb dexie encrypted
+`bun add https://github.com/asset-view/dexie-encrypted.git\#ESM`
+
+```js
+import { createRxDatabase, addRxPlugin, RxDatabase } from 'rxdb';
+import { isDev } from '@/utils/env';
+import { HeroCollection } from './schemes/hero';
+import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
+import fakeIndexedDB, { IDBKeyRange } from 'fake-indexeddb';
+import {
+  applyEncryptionMiddleware,
+  clearAllTables,
+  clearEncryptedTables,
+} from 'dexie-encrypted';
+
+export type MyDatabaseCollections = {
+  heroes: HeroCollection;
+};
+
+export type MyDatabase = RxDatabase<MyDatabaseCollections>;
+
+async function createDb() {
+  if (isDev) {
+    await import('rxdb/plugins/dev-mode').then((module) =>
+      addRxPlugin(module.RxDBDevModePlugin)
+    );
+  }
+  const db = await createRxDatabase<MyDatabaseCollections>({
+    name: 'mydb',
+    storage: getRxStorageDexie({
+      /** fake indexedDB for unit testing */
+      indexedDB: fakeIndexedDB,
+      IDBKeyRange,
+      addons: [
+        (db) =>
+          applyEncryptionMiddleware(
+            db,
+            new TextEncoder().encode('secrect'),
+            {
+              heroes: encrypt.NON_INDEXED_FIELDS,
+            },
+            (db) => {
+              clearAllTables(db);
+              clearEncryptedTables(db);
+              return Promise.resolve();
+            }
+          ),
+      ],
+    }),
+  });
+}
+
+```
+
 # Welcome to TanStack.com!
 
 This site is built with TanStack Router!

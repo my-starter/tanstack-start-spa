@@ -10,9 +10,9 @@ const getFullData = async (): Promise<any> => {
 
   const json = await response.json();
 
-  if (!json.conference) {
-    throw new Error('Invalid conference data format');
-  }
+  // if (!json.conference) {
+  //   throw new Error('Invalid conference data format');
+  // }
 
   return json;
 };
