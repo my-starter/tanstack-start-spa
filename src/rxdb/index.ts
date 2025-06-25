@@ -1,8 +1,8 @@
-import { createRxDatabase, addRxPlugin, RxDatabase } from 'rxdb';
-import { isBrowser, isDev } from '@/utils/env';
-import { HeroCollection, heroSchema } from './schemes/hero';
+import { addRxPlugin, createRxDatabase, type RxDatabase } from 'rxdb';
 import { RxDBJsonDumpPlugin } from 'rxdb/plugins/json-dump';
+import { isBrowser, isDev } from '@/utils/env';
 import { getStorage } from './helper';
+import { type HeroCollection, heroSchema } from './schemes/hero';
 
 export type MyDatabaseCollections = {
   heroes: HeroCollection;
@@ -15,9 +15,7 @@ export const getDbName = (name: string) =>
 
 export async function createDb(name: string) {
   if (isDev) {
-    await import('rxdb/plugins/dev-mode').then((module) =>
-      addRxPlugin(module.RxDBDevModePlugin)
-    );
+    await import('rxdb/plugins/dev-mode').then((module) => addRxPlugin(module.RxDBDevModePlugin));
   }
 
   const db = await createRxDatabase<MyDatabaseCollections>({

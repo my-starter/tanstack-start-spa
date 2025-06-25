@@ -1,10 +1,5 @@
 {
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "postcss.config.ts",
-    "scripts/generate-sw.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", "postcss.config.ts", "scripts/generate-sw.ts"],
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,

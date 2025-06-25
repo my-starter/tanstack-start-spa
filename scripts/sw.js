@@ -14,7 +14,7 @@ self.addEventListener('message', (event) => {
 });
 
 const backgroundSyncQueue = new workbox.backgroundSync.Queue('gdupQueue', {
-  maxRetentionTime: 24 * 60 // Retry for up to 24 hours (specified in minutes)
+  maxRetentionTime: 24 * 60, // Retry for up to 24 hours (specified in minutes)
 });
 
 if (self.location.hostname === 'localhost') {
@@ -22,32 +22,34 @@ if (self.location.hostname === 'localhost') {
   self.skipWaiting();
   clients.claim();
 } else {
-  const CACHE_NAME = 'cache-v0'/*#replaceCacheName*/;
+  const CACHE_NAME = 'cache-v0' /*#replaceCacheName*/;
 
-  self.addEventListener('activate', event => {
+  self.addEventListener('activate', (event) => {
     event.waitUntil(clients.claim());
   });
 
   let updateInterval;
   self.addEventListener('online', () => {
-    updateInterval = setInterval(() => {
-      self.registration.update();
-    }, 5 * 60 * 1000); // 5 minutes
+    updateInterval = setInterval(
+      () => {
+        self.registration.update();
+      },
+      5 * 60 * 1000,
+    ); // 5 minutes
   });
 
   self.addEventListener('offline', () => {
     if (updateInterval) clearInterval(updateInterval);
   });
 
-  const urlsToCache = ''/*#replaceUrls*/
+  const urlsToCache = ''; /*#replaceUrls*/
 
   workbox.precaching.precacheAndRoute(
-    urlsToCache.map(url => ({
+    urlsToCache.map((url) => ({
       url,
-      revision: CACHE_NAME
-    }))
+      revision: CACHE_NAME,
+    })),
   );
-
 
   // registerRoute(
   //   ({ url }) => url.pathname.startsWith('/_server'),
@@ -64,10 +66,10 @@ if (self.location.hostname === 'localhost') {
             if (cachedResponse) return cachedResponse;
 
             return caches.match('/offline');
-          }
-        }
-      ]
-    })
+          },
+        },
+      ],
+    }),
   );
 
   self.addEventListener('activate', (event) => {
@@ -75,17 +77,19 @@ if (self.location.hostname === 'localhost') {
       caches.keys().then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            if (!cacheName.startsWith('workbox-') &&
+            if (
+              !cacheName.startsWith('workbox-') &&
               cacheName !== 'gdup-data' &&
               cacheName !== 'github-avatars' &&
               cacheName !== 'navigations' &&
               cacheName !== 'user-data' &&
-              cacheName !== 'default') {
+              cacheName !== 'default'
+            ) {
               return caches.delete(cacheName);
             }
-          })
+          }),
         );
-      })
+      }),
     );
   });
 
@@ -107,7 +111,7 @@ if (self.location.hostname === 'localhost') {
         body: data.body,
         icon: '/icons/android-chrome-192x192.png',
         badge: '/icons/android-chrome-72x72.png',
-        data: data.url
+        data: data.url,
       });
     }
   });
@@ -115,9 +119,7 @@ if (self.location.hostname === 'localhost') {
   self.addEventListener('notificationclick', (event) => {
     event.notification.close();
     if (event.notification.data) {
-      event.waitUntil(
-        clients.openWindow(event.notification.data)
-      );
+      event.waitUntil(clients.openWindow(event.notification.data));
     }
   });
 }

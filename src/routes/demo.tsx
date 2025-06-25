@@ -1,13 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Button, Group, Stepper } from '@mantine/core';
+import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import { Stepper, Button, Group } from '@mantine/core';
 
 export const Route = createFileRoute('/demo')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <Demo />
+  return <Demo />;
 }
 
 function Demo() {
@@ -27,13 +27,13 @@ function Demo() {
         <Stepper.Step label="Final step" description="Get full access">
           Step 3 content: Get full access
         </Stepper.Step>
-        <Stepper.Completed>
-          Completed, click back button to get to previous step
-        </Stepper.Completed>
+        <Stepper.Completed>Completed, click back button to get to previous step</Stepper.Completed>
       </Stepper>
 
       <Group justify="center" mt="xl">
-        <Button variant="default" onClick={prevStep}>Back</Button>
+        <Button variant="default" onClick={prevStep}>
+          Back
+        </Button>
         <Button onClick={nextStep}>Next step</Button>
       </Group>
     </>

@@ -1,9 +1,9 @@
 import {
+  type ExtractDocumentTypeFromTypedRxJsonSchema,
+  type RxCollection,
+  type RxDocument,
+  type RxJsonSchema,
   toTypedRxJsonSchema,
-  ExtractDocumentTypeFromTypedRxJsonSchema,
-  RxJsonSchema,
-  RxDocument,
-  RxCollection,
 } from 'rxdb';
 
 export const heroSchemaLiteral = {
@@ -36,28 +36,21 @@ export const heroSchemaLiteral = {
 const schemaTyped = toTypedRxJsonSchema(heroSchemaLiteral);
 
 // aggregate the document type from the schema
-export type HeroDocType = ExtractDocumentTypeFromTypedRxJsonSchema<
-  typeof schemaTyped
->;
+export type HeroDocType = ExtractDocumentTypeFromTypedRxJsonSchema<typeof schemaTyped>;
 
 // create the typed RxJsonSchema from the literal typed object.
 export const heroSchema: RxJsonSchema<HeroDocType> = heroSchemaLiteral;
 
 export type HeroDocMethods = {
-    scream: (v: string) => string;
+  scream: (v: string) => string;
 };
 
 export type HeroDocument = RxDocument<HeroDocType, HeroDocMethods>;
 
-
 // we declare one static ORM-method for the collection
 export type HeroCollectionMethods = {
-    countAllDocuments: () => Promise<number>;
-}
+  countAllDocuments: () => Promise<number>;
+};
 
 // and then merge all our types
-export type HeroCollection = RxCollection<
-    HeroDocType,
-    HeroDocMethods,
-    HeroCollectionMethods
->;
+export type HeroCollection = RxCollection<HeroDocType, HeroDocMethods, HeroCollectionMethods>;

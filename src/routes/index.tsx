@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { getAllData } from '@/server/functions';
 import { Button } from '@mantine/core';
+import { createFileRoute } from '@tanstack/react-router';
+import { getAllData } from '@/server/functions';
 import { docsDb } from '@/store';
 
 export const Route = createFileRoute('/')({
@@ -10,13 +10,13 @@ export const Route = createFileRoute('/')({
       const data = await getAllData();
       return data;
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   },
-})
+});
 
 async function handleClick() {
-  console.log('docsDb', docsDb)
+  console.log('docsDb', docsDb);
   const all = await docsDb.heroes.find().exec();
   console.log(all); // 应该能查到刚插入的数据
   const doc = await docsDb.heroes.insert({
@@ -33,5 +33,5 @@ function Home() {
       <h3>Welcome Home!!!</h3>
       <Button onClick={handleClick}>Click me</Button>
     </div>
-  )
+  );
 }

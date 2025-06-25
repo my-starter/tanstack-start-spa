@@ -8,12 +8,7 @@ async function generateServiceWorker(outputDir = '.output/public') {
 
   const files = await glob(`${outputDir}/**/*`, { nodir: true });
 
-  const ignoredRoutes = [
-    '/robots.txt',
-    '/nitro.json',
-    '/sw.js',
-    '/registerSW.js',
-  ];
+  const ignoredRoutes = ['/robots.txt', '/nitro.json', '/sw.js', '/registerSW.js'];
 
   const assetsToCache = files
     .map((file) => {

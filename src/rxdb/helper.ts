@@ -1,9 +1,9 @@
-import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
-import { wrappedValidateAjvStorage } from 'rxdb/plugins/validate-ajv';
+import type { RxStorage } from 'rxdb';
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression';
+import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { getRxStorageMemory } from 'rxdb/plugins/storage-memory';
+import { wrappedValidateAjvStorage } from 'rxdb/plugins/validate-ajv';
 import { isBrowser } from '@/utils/env';
-import { RxStorage } from 'rxdb';
 
 export function getBrowserStorage() {
   return getRxStorageDexie({
